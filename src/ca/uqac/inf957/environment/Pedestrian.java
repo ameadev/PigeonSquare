@@ -25,7 +25,7 @@ public class Pedestrian extends Parent {
 	    Y = y;
 		speed = (new Random().nextInt(5) + 1)*1000;
 		this.createTime = System.currentTimeMillis();
-		this.expiration = 100;//(new Random().nextInt(3) + 4)*1000;
+		this.expiration = (new Random().nextInt(3) + 4)*1000;
 		
 		
 		InputStream url = getClass().getResourceAsStream("Big.png");

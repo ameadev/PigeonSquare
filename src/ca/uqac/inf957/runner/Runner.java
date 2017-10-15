@@ -28,6 +28,7 @@ public class Runner extends Application
 	
 	ArrayList<Pigeon> pigeons = new ArrayList<Pigeon>();
 	ArrayList<Food> foods = new ArrayList<Food>();
+	Pedestrian pedestrian = null;
 	Group group;
 	ArrayList<Timeline> threads = new ArrayList<Timeline>();
 	int clickX;
@@ -108,7 +109,7 @@ public class Runner extends Application
             { 
             	int x = new Random().nextInt(Settings.pigeonXMax); 
     			int y = 20;
-    			Pedestrian pedestrian = null;
+    			
 				try {
 					pedestrian = new Pedestrian(x, y);
 					group.getChildren().add(pedestrian);
@@ -143,7 +144,7 @@ public class Runner extends Application
 	  		    	for(Iterator<Food> n = foods.iterator(); n.hasNext(); )
 	  	  			{
 	  	  				Food i = (Food) n.next();
-	  	  				// expiration
+	  	  				// food expiration
 		  	  			if(System.currentTimeMillis() > i.calculateExpiration())
 	  	  				{
 	  	  					i.setVisible(false); 
@@ -163,6 +164,12 @@ public class Runner extends Application
 	  	  					}
 	  	  				}		
 	  	  			}
+	  		    	
+	  		    	//pedestrian expiration 
+	  		    	if((System.currentTimeMillis() > pedestrian.calculateExpiration()) && (pedestrian !=null))
+	  				{
+	  				pedestrian.setVisible(false);
+	  				}
 	
 	  		        return null;
 		      }
@@ -229,15 +236,7 @@ public class Runner extends Application
 				ramdomMove.start();
 			}
 		}
-		
-		//couper les tread et donner de nouvelles positions
-        
-		System.out.println(pedestrian.getX());
-        System.out.println(pedestrian.getY());
-		if(System.currentTimeMillis() > pedestrian.calculateExpiration())
-			{
-			pedestrian.setVisible(false);
-			}
+
 	
 	}
 	
