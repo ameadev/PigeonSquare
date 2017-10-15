@@ -4,8 +4,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-import java.util.Timer;
-
 import ca.uqac.inf957.environment.Food;
 import ca.uqac.inf957.environment.Pedestrian;
 import ca.uqac.inf957.pigeon.Pigeon;
@@ -22,7 +20,6 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 
 
@@ -33,10 +30,6 @@ public class Runner extends Application
 	ArrayList<Food> foods = new ArrayList<Food>();
 	Group group;
 	ArrayList<Timeline> threads = new ArrayList<Timeline>();
-	//Timer timer;
-	//boolean firstClic = false;
-	//boolean SommeilPigeon = true;
-	//int tempsSommeil;
 	int clickX;
 	int clickY;
 
@@ -67,7 +60,7 @@ public class Runner extends Application
 		    catch (NullPointerException e){ e.printStackTrace();}
 
 		}
-		final Button button = new Button("Stimuler le passge d'un piéton");
+		final Button button = new Button("Simuler le passge d'un piéton");
 		group.getChildren().add(button);
 		Scene scene = new Scene(group, Settings.palnelWidth, Settings.panelHeight);
         scene.setFill(Color.WHITESMOKE);
@@ -103,10 +96,7 @@ public class Runner extends Application
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-        		
-        		//tempsSommeil += new Random().nextInt(30000);//Temps aleatoire avant effrayer les pigeons
-        		//lastClicked = System.currentTimeMillis();
-        		//firstClic = true;
+        	
         	}
         });
         
@@ -117,7 +107,7 @@ public class Runner extends Application
             public void handle(ActionEvent actionEvent) 
             { 
             	int x = new Random().nextInt(Settings.pigeonXMax); 
-    			int y = 50;
+    			int y = 20;
     			Pedestrian pedestrian = null;
 				try {
 					pedestrian = new Pedestrian(x, y);
@@ -160,7 +150,6 @@ public class Runner extends Application
 	  	  					foods.remove(i);
 	  	  				}
 		  	  				
-	  	  				//On essai de trouver quand les pigeons sont sur la nourriture
 	  	  				Iterator<Pigeon> lepigeon = pigeons.iterator();
 	  	  				while(lepigeon.hasNext())
 	  	  				{   					
@@ -175,23 +164,12 @@ public class Runner extends Application
 	  	  				}		
 	  	  			}
 	
-	  		    	
-	  		     /*if(System.currentTimeMillis() > lastClicked + tempsSommeil)//les pigeons sont effrayes
-	  			{
-	  		    	 	SommeilPigeon = false;
-	  				if(tabPigeon.size() != 0 && firstClic && tabNourriture.size()==0 && !SommeilPigeon)
-	  				{
-	  					deplacementBallade();	
-	  				}
-	  			}*/
 	  		        return null;
 		      }
 		    };
 		  }
 		};
 		
-	//backTask.setDelay(Duration.seconds(1));
-	//backTask.setPeriod(Duration.seconds(3));
 	backgroundThread.start();
         
         
@@ -203,12 +181,12 @@ public class Runner extends Application
 		
 		if(this.pigeons.size() != 0)
 		{ 
-			Iterator<Pigeon> pigeonItt = this.pigeons.iterator(); //iteration sur arraylist tabPigeon
+			Iterator<Pigeon> pigeonItt = this.pigeons.iterator(); 
 			while(pigeonItt.hasNext())
 			{
 				Pigeon currentPigeon =  pigeonItt.next(); 
 				//prochain.moveTo(x, y);
-				Thread moveToFood = new Thread(currentPigeon.new Move(currentPigeon.moveTo(x, y)));//lancement du thread
+				Thread moveToFood = new Thread(currentPigeon.new Move(currentPigeon.moveTo(x, y)));
 				moveToFood.start();
 			}
 		}
@@ -220,11 +198,11 @@ public class Runner extends Application
 		
 		if(this.pigeons.size() != 0)
 		{ 
-			Iterator<Pigeon> pigeonIterator = this.pigeons.iterator(); //iteration sur arraylist tabPigeon
+			Iterator<Pigeon> pigeonIterator = this.pigeons.iterator(); 
 			while(pigeonIterator.hasNext())
 			{
 				Pigeon currentPigeon =  pigeonIterator.next();
-				Thread goBack = new Thread(currentPigeon.new Move(currentPigeon.backToOrigine()));//lancement du thread
+				Thread goBack = new Thread(currentPigeon.new Move(currentPigeon.backToOrigine()));
 				goBack.start();
 			}
 		}
@@ -241,13 +219,13 @@ public class Runner extends Application
 		//
 		if(this.pigeons.size() != 0)
 		{ 
-			Iterator<Pigeon> pigeonItt = this.pigeons.iterator(); //iteration sur arraylist tabPigeon
+			Iterator<Pigeon> pigeonItt = this.pigeons.iterator(); 
 			while(pigeonItt.hasNext())
 			{
 				Pigeon currentPigeon =  pigeonItt.next(); 
 				int rX = new Random().nextInt(Settings.pigeonXMax); 
 				int rY = new Random().nextInt(Settings.pigeonYMax);
-				Thread ramdomMove = new Thread(currentPigeon.new Move(currentPigeon.moveTo(rX, rY)));//lancement du thread
+				Thread ramdomMove = new Thread(currentPigeon.new Move(currentPigeon.moveTo(rX, rY)));
 				ramdomMove.start();
 			}
 		}

@@ -1,10 +1,8 @@
 package ca.uqac.inf957.pigeon;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.Random;
-
 import ca.uqac.inf957.settings.Settings;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -28,14 +26,10 @@ public class Pigeon extends Parent {
 	    Y = y;
 		speed = (new Random().nextInt(5) + 1)*1000;
 		
-		
-		
-		// a remplacer par un chemin relatif
-		Image pigeonImage = new Image(new FileInputStream("/Users/macpro/Desktop/UQAC/automne_2017/POAvancé/Travaux/workspace_PO/PigeonSquare/resources/pigeon.png"));
-		//URL url = Pigeon.class.getResource("pigeon.png");
-		//Image pigeonImage = new Image(new FileInputStream(url.toString()));
-		ImageView imageView = new ImageView(pigeonImage); 
-	      
+		//Image pigeonImage = new Image(new FileInputStream("/Users/macpro/Desktop/UQAC/automne_2017/POAvancé/Travaux/workspace_PO/PigeonSquare/resources/pigeon.png"));
+		InputStream url = getClass().getResourceAsStream("pigeon.png");
+		Image pigeonImage = new Image(url);
+		ImageView imageView = new ImageView(pigeonImage);  
         //Setting the position of the image 
 		initPosition();
       

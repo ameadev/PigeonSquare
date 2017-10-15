@@ -1,10 +1,8 @@
 package ca.uqac.inf957.environment;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Random;
-
-import ca.uqac.inf957.settings.Settings;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -30,10 +28,8 @@ public class Pedestrian extends Parent {
 		this.expiration = 100;//(new Random().nextInt(3) + 4)*1000;
 		
 		
-		// a remplacer par un chemin relatif
-		Image pedestrianImage = new Image(new FileInputStream("/Users/macpro/Desktop/UQAC/automne_2017/POAvancé/Travaux/workspace_PO/PigeonSquare/resources/pigeon.png"));
-		//URL url = Pigeon.class.getResource("pigeon.png");
-		//Image pigeonImage = new Image(new FileInputStream(url.toString()));
+		InputStream url = getClass().getResourceAsStream("Big.png");
+		Image pedestrianImage = new Image(url);
 		ImageView imageView = new ImageView(pedestrianImage); 
 	      
         //Setting the position of the image 
