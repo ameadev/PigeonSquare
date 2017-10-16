@@ -11,7 +11,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-public class Pedestrian extends Parent {
+/**
+ * @author Mewena
+ * materializes the pedestrian who frightens the pigeons 
+ *
+ */
+public class Pedestrian extends Parent 
+{
 
 	private int X;
 	private int Y;
@@ -19,7 +25,13 @@ public class Pedestrian extends Parent {
 	private double createTime;
 	private double expiration;
 	
-	public Pedestrian(int x, int y) throws FileNotFoundException {
+	/**
+	 * constructor 
+	 * @param x position abscissa on the panel
+	 * @param y position ordinate on the panel
+	 */
+	public Pedestrian(int x, int y) throws FileNotFoundException 
+	{
 		super();
 		X = x;
 	    Y = y;
@@ -36,15 +48,17 @@ public class Pedestrian extends Parent {
 		initPosition();
       
         //setting the fit height and width of the image view 
-        imageView.setFitHeight(50); 
-        imageView.setFitWidth(30);
+        imageView.setFitHeight(60); 
+        imageView.setFitWidth(40);
    
 		this.getChildren().add(imageView);
 		
 		
 	}
 	
-	//
+	/**
+	 * initialize the pedestrian position according to x,y
+	 */
 	public void initPosition()
 	{
 		this.setTranslateX(this.X);
@@ -60,22 +74,30 @@ public class Pedestrian extends Parent {
 		return this.translateYProperty().intValue();
 	}
 	
-	//
+	/**
+	 * @return the speed of pedestrian
+	 */
 	public int getSpeed() {
 		return speed;
 	}
 
-    //
+	/**
+	 * @param the pedestrian speed
+	 */
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
 	
-	//
-	public Timeline moveTo(int foodX,int foodY)
+	/**
+	 * materialize the move of a pedestrian
+	 * @param pedestrianX destination abscissa
+	 * @param pedestrianY destination ordinate
+	 */
+	public Timeline moveTo(int pedestrianX,int pedestrianY)
 	{         
         Duration duration = Duration.millis(speed);
-        KeyValue keyValueX = new KeyValue(this.translateXProperty(), foodX);
-        KeyValue keyValueY = new KeyValue(this.translateYProperty(), foodY);
+        KeyValue keyValueX = new KeyValue(this.translateXProperty(), pedestrianX);
+        KeyValue keyValueY = new KeyValue(this.translateYProperty(), pedestrianY);
         KeyFrame keyFrameX = new KeyFrame(duration , keyValueX);
         KeyFrame keyFrameY = new KeyFrame(duration ,keyValueY); 
         Timeline timeline = new Timeline();
@@ -84,7 +106,9 @@ public class Pedestrian extends Parent {
 		
 	}
 	
-	//
+	/**
+	 * subclass instantiated in pedestrian thread 
+	 */
 	public class Move implements Runnable {
 		
 		Timeline timeline;
@@ -100,8 +124,9 @@ public class Pedestrian extends Parent {
 
 	}
 	
-	//
-	//
+	/**
+	 * @return create time plus expiration
+	 */
 	public double calculateExpiration()
 	{
 		return createTime + expiration;

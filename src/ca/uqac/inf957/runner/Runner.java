@@ -21,8 +21,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-
-
+/**
+ * @author Mewena
+ * materializes the main tread   
+ *
+ */
 public class Runner extends Application 
 {
 	
@@ -33,14 +36,20 @@ public class Runner extends Application
 	ArrayList<Timeline> threads = new ArrayList<Timeline>();
 	int clickX;
 	int clickY;
-
+    
+	/**
+	 * main
+	 */
 	public static void main(String[] args) 
 	{
 		// TODO Auto-generated method stub
 		launch(args);
 
 	}
-
+    
+	/**
+	 * javaFx start methode 
+	 */
 	@Override
 	public void start(Stage arg0) throws Exception 
 	{
@@ -72,7 +81,8 @@ public class Runner extends Application
         //add food
         scene.setOnMouseClicked(new EventHandler<MouseEvent>()
         {
-        	public void handle(MouseEvent me){ 
+        	public void handle(MouseEvent me)
+        	{ 
         		int foodX = (int)me.getSceneX();
         		//clickX = (int)me.getSceneX();
         		//clickY = (int)me.getSceneY();
@@ -129,7 +139,10 @@ public class Runner extends Application
     		     
             } 
         });
-        //add running back tread
+       
+        /**
+    	 * running back tread 
+    	 */
         ScheduledService<Void> backgroundThread = new ScheduledService<Void>()
         {
           @Override
@@ -141,25 +154,26 @@ public class Runner extends Application
 	  		 protected Void call() throws Exception 
 		     {
 	  		    	
-	  		    	for(Iterator<Food> n = foods.iterator(); n.hasNext(); )
-	  	  			{
-	  	  				Food i = (Food) n.next();
+	  		        Iterator<Food> foodIteratorn = foods.iterator();
+  	  				while(foodIteratorn.hasNext())
+	  		    	{
+	  	  				Food food = foodIteratorn.next();
 	  	  				// food expiration
-		  	  			if(System.currentTimeMillis() > i.calculateExpiration())
+		  	  			if(System.currentTimeMillis() > food.calculateExpiration())
 	  	  				{
-	  	  					i.setVisible(false); 
-	  	  					foods.remove(i);
+	  	  					food.setVisible(false); 
+	  	  					foods.remove(food);
 	  	  				}
 		  	  				
-	  	  				Iterator<Pigeon> lepigeon = pigeons.iterator();
-	  	  				while(lepigeon.hasNext())
+	  	  				Iterator<Pigeon> pigeonIterator = pigeons.iterator();
+	  	  				while(pigeonIterator.hasNext())
 	  	  				{   					
-	  	  					Pigeon p = lepigeon.next();
+	  	  					Pigeon pigeon = pigeonIterator.next();
 	  	  					
-	  	  					if((p.getX()==i.getFoodX()) && (p.getY()==i.getFoodY()))
+	  	  					if((pigeon.getX() == food.getFoodX()) && (pigeon.getY() == food.getFoodY()))
 	  	  					{
-	  	  						i.setVisible(false);
-	  	  						foods.remove(i);
+	  	  						food.setVisible(false);
+	  	  						foods.remove(food);
 	  	  						moveToInitialPosition();
 	  	  					}
 	  	  				}		
@@ -170,19 +184,21 @@ public class Runner extends Application
 	  				{
 	  				pedestrian.setVisible(false);
 	  				}
-	
+	  		    	
 	  		        return null;
 		      }
 		    };
 		  }
 		};
-		
+	
+	//	
 	backgroundThread.start();
-        
-        
+          
 	}
 	
-	//
+	/**
+	 *  pigeons moving to food threads 
+	 */
 	public void movePigeonToFood(int x, int y) throws Exception
 	{
 		
@@ -191,15 +207,16 @@ public class Runner extends Application
 			Iterator<Pigeon> pigeonItt = this.pigeons.iterator(); 
 			while(pigeonItt.hasNext())
 			{
-				Pigeon currentPigeon =  pigeonItt.next(); 
-				//prochain.moveTo(x, y);
+				Pigeon currentPigeon =  pigeonItt.next();
 				Thread moveToFood = new Thread(currentPigeon.new Move(currentPigeon.moveTo(x, y)));
 				moveToFood.start();
 			}
 		}
 	}
 	
-	//
+	/**
+	 *  pigeons moving to their  init position threads 
+	 */
 	public void moveToInitialPosition() throws Exception
 	{
 		
@@ -216,8 +233,9 @@ public class Runner extends Application
 	}
 	
 	
-	// 
-	//
+	/**
+	 *  pedestrian moving threads 
+	 */
 	public void movePedestrian(Pedestrian pedestrian, int x, int y) throws Exception
 	{
 		Thread moveTPedestrian = new Thread(pedestrian.new Move(pedestrian.moveTo(x, y)));
@@ -236,9 +254,8 @@ public class Runner extends Application
 				ramdomMove.start();
 			}
 		}
-
 	
 	}
 	
-
+	
 }

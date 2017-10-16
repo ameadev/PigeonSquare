@@ -6,6 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+/**
+ * @author Mewena
+ * materializes the food that will be eaten by the pigeons 
+ *
+ */
 public class Food extends Parent 
 {
 	private double foodX;
@@ -14,7 +19,11 @@ public class Food extends Parent
 	private double expiration;
 	private Circle cercle = new Circle();
 	
-	//
+	/**
+	 * constructor 
+	 * @param x position abscissa on the panel
+	 * @param y position ordinate on the panel
+	 */
 	public Food(double x, double y) 
 	{
 		super();
@@ -30,55 +39,81 @@ public class Food extends Parent
 	}
 
 	
-	//
-	public double getFoodX() {
+	/**
+	 * @return the initial abscissa
+	 */
+	public double getFoodX() 
+	{
 		return foodX;
 	}
 
-
-	public void setFoodX(double foodX) {
+	/**
+	 * @param x 
+	 */
+	public void setFoodX(double foodX) 
+	{
 		this.foodX = foodX;
 	}
 
-
-	public double getFoodY() {
+	/**
+	 * @return the initial ordered
+	 */
+	public double getFoodY() 
+	{
 		return foodY;
 	}
 
-
-	public void setFoodY(double foodY) {
+	/**
+	 * @param y
+	 */
+	public void setFoodY(double foodY) 
+	{
 		this.foodY = foodY;
 	}
 	
-	public double getCreateTime() {
+	/**
+	 * @return create date time
+	 */
+	public double getCreateTime() 
+	{
 		return createTime;
 	}
 
 
-	public void setCreateTime(double createTime) {
+	public void setCreateTime(double createTime) 
+	{
 		this.createTime = createTime;
 	}
 
-	public double getExpiration() {
+	/**
+	 * @return the expiration date time
+	 */
+	public double getExpiration() 
+	{
 		return expiration;
 	}
 
-	public void setExpiration(double expiration) {
+	public void setExpiration(double expiration) 
+	{
 		this.expiration = expiration;
 	}
 	
-	//
+	/**
+	 * @return create time plus expiration
+	 */
 	public double calculateExpiration()
 	{
 		return createTime + expiration;
 	}
 	
-	//
+	/**
+	 * change food color
+	 * @param newColor
+	 */
 	public void changeColor(Color newColor)
 	{
 		this.cercle.setFill(newColor);
 	}
-	
 	
 
 }

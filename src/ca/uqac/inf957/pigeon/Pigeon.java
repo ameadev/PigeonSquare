@@ -12,21 +12,31 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-public class Pigeon extends Parent {
+/**
+ * @author Mewena
+ * materializes the pigeons  
+ *
+ */
+public class Pigeon extends Parent 
+{
 	
 	private int X;
 	private int Y;
 	private int speed;
 	
 	
-	//
-	public Pigeon(int x, int y) throws FileNotFoundException {
+	/**
+	 * constructor 
+	 * @param x position abscissa on the panel
+	 * @param y position ordinate on the panel
+	 */
+	public Pigeon(int x, int y) throws FileNotFoundException 
+	{
 		super();
 		X = x;
 	    Y = y;
 		speed = (new Random().nextInt(5) + 1)*1000;
 		
-		//Image pigeonImage = new Image(new FileInputStream("/Users/macpro/Desktop/UQAC/automne_2017/POAvancé/Travaux/workspace_PO/PigeonSquare/resources/pigeon.png"));
 		InputStream url = getClass().getResourceAsStream("pigeon.png");
 		Image pigeonImage = new Image(url);
 		ImageView imageView = new ImageView(pigeonImage);  
@@ -42,14 +52,18 @@ public class Pigeon extends Parent {
 		
 	}
 
-    //
+	/**
+	 * initialize the pigeons position according to x,y
+	 */
 	public void initPosition()
 	{
 		this.setTranslateX(this.X);
 		this.setTranslateY(this.Y);
 	}
 	
-	//
+	/**
+	 * @return the current abscissa of the pigeon
+	 */
 	public double getX() {
 		return this.translateXProperty().intValue();
 	}
@@ -59,7 +73,9 @@ public class Pigeon extends Parent {
 		X = x;
 	}
 
-    //
+	/**
+	 * @return the current ordinate of the pigeon
+	 */
 	public double getY() {
 		return this.translateYProperty().intValue();
 	}
@@ -69,17 +85,25 @@ public class Pigeon extends Parent {
 		Y = y;
 	}
 
-    //
+	/**
+	 * @return the speed of pigeon
+	 */
 	public int getSpeed() {
 		return speed;
 	}
 
-    //
+	/**
+	 * @param the pedestrian speed
+	 */
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
 	
-	//
+	/**
+	 * materialize the move of a pigeon from initialize position to food
+	 * @param foodX food abscissa
+	 * @param foodY food ordinate
+	 */
 	public Timeline moveTo(int foodX,int foodY)
 	{         
         Duration duration = Duration.millis(speed);
@@ -94,11 +118,13 @@ public class Pigeon extends Parent {
 		
 	}
 	
-	//
+	/**
+	 * materialize the move of a pigeon to his init position
+	 * 
+	 */
 	public Timeline backToOrigine() //la changer pour retourner à un point random
 	{         
-        Duration duration = Duration.millis(speed);
-        //Duration duration = Duration.seconds(1); 
+        Duration duration = Duration.millis(speed); 
         KeyValue keyValueX = new KeyValue(this.translateXProperty(), this.X);
         KeyValue keyValueY = new KeyValue(this.translateYProperty(), this.Y);
         KeyFrame keyFrameX = new KeyFrame(duration , keyValueX);
@@ -109,7 +135,9 @@ public class Pigeon extends Parent {
         //timeline.play();	
 	}
 	
-	//
+	/**
+	 * subclass instantiated in pigeon thread 
+	 */
 	public class Move implements Runnable {
 		
 		Timeline timeline;
